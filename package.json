@@ -44,6 +44,7 @@
       "public/icon.ico",
       "package.json"
     ],
+    "beforePack": "scripts/beforePack.cjs",
     "afterPack": "scripts/afterPack.cjs",
     "win": {
       "signAndEditExecutable": false,

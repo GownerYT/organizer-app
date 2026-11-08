@@ -33,6 +33,6 @@ Build a Windows folder distribution with:
 npm run package
 ```
 
-The output is written to `release/Organizer-win32-x64/` (the exact architecture suffix can vary). It contains the executable, `icon.ico`, and the database will be created beside the executable on first launch.
+The output is written to `release/win-unpacked/`. It contains the executable and `icon.ico`; the database will be created beside the executable on first launch.
 
 The renderer cannot access Node.js, the filesystem, or SQL directly. Task operations cross the preload bridge through a small, explicit API, with validation repeated in the Electron main process.

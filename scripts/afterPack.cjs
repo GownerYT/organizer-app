@@ -7,6 +7,14 @@ exports.default = async function afterPack(context) {
     context.appOutDir ?? path.join(context.outDir, "win-unpacked");
   const sourceIcon = path.join(projectDirectory, "public", "icon.ico");
   const outputIcon = path.join(outputDirectory, "icon.ico");
+  const backupDatabase = path.join(
+    context.outDir ?? path.join(projectDirectory, "release"),
+    ".organizer-db-backup",
+  );
 
   fs.copyFileSync(sourceIcon, outputIcon);
+  if (fs.existsSync(backupDatabase)) {
+    fs.copyFileSync(backupDatabase, path.join(outputDirectory, "organizer.db"));
+    fs.unlinkSync(backupDatabase);
+  }
 };

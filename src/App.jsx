@@ -8,8 +8,17 @@ import TaskList from "./components/TaskList.jsx";
 const api = window.organizer;
 
 function getErrorMessage(error) {
-  return error instanceof Error
-    ? error.message
+  const message = error instanceof Error ? error.message : "";
+  const safeMessages = new Set([
+    "Enter a task name.",
+    "Choose a due date.",
+    "Choose a valid due date.",
+    "That task could not be found.",
+    "We could not complete that task operation. Please try again.",
+  ]);
+
+  return safeMessages.has(message)
+    ? message
     : "Something went wrong. Please try again.";
 }
 
