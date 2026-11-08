@@ -1,0 +1,64 @@
+{
+  "name": "organizer",
+  "version": "1.0.0",
+  "description": "A local-first desktop task manager.",
+  "main": "electron/main.cjs",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "build": "vite build",
+    "start": "electron .",
+    "test": "node --test \"shared/**/*.test.js\" \"electron/**/*.test.cjs\"",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "typecheck": "node --check electron/main.cjs && node --check electron/database.cjs && node --check electron/preload.cjs",
+    "package": "npm run build && electron-builder --win dir"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sql.js": "^1.12.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^9.0.1",
+    "electron-builder": "^25.1.8",
+    "electron": "^32.1.2",
+    "eslint": "^9.12.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.10.0",
+    "prettier": "^3.3.3",
+    "vite": "^5.4.8",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.organizer.app",
+    "productName": "Organizer",
+    "asar": true,
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "shared/**/*",
+      "public/icon.ico",
+      "package.json"
+    ],
+    "afterPack": "scripts/afterPack.cjs",
+    "win": {
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "public/icon.ico"
+    },
+    "directories": {
+      "output": "release"
+    }
+  }
+}
