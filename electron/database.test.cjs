@@ -14,7 +14,7 @@ async function createDatabase() {
   return { database, directory };
 }
 
-test("persists tasks and supports update and individual deletion", async () => {
+test("persists tasks and supports updating name and due date", async () => {
   const { database, directory } = await createDatabase();
   const created = database.createTask({
     name: "Buy milk",
@@ -22,9 +22,15 @@ test("persists tasks and supports update and individual deletion", async () => {
   });
 
   assert.equal(created.name, "Buy milk");
+  assert.equal(created.completionDate, "2026-11-08");
   assert.equal(database.getTasks().length, 1);
-  database.updateTask({ id: created.id, name: "Buy oat milk" });
+  database.updateTask({
+    id: created.id,
+    name: "Buy oat milk",
+    completionDate: "2026-11-09",
+  });
   assert.equal(database.getTasks()[0].name, "Buy oat milk");
+  assert.equal(database.getTasks()[0].completionDate, "2026-11-09");
   database.deleteTask(created.id);
   assert.deepEqual(database.getTasks(), []);
 

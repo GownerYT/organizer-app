@@ -67,9 +67,11 @@ function registerIpcHandlers() {
   ipcMain.handle("tasks:update", (_event, input) =>
     runIpcOperation(() => {
       const taskId = validation.assertValidTaskId(input?.id);
-      const nameError = validation.validateTaskName(input?.name);
-      if (nameError) throw new Error(nameError);
-      return database.updateTask({ id: taskId, name: input.name });
+      const task = validation.assertValidTaskInput({
+        name: input?.name,
+        completionDate: input?.completionDate,
+      });
+      return database.updateTask({ id: taskId, ...task });
     }),
   );
   ipcMain.handle("tasks:delete", (_event, id) =>

@@ -90,17 +90,23 @@ class TaskDatabase {
     return this.getTasks()[0];
   }
 
-  updateTask({ id, name }) {
+  updateTask({ id, name, completionDate }) {
     this.ensureReady();
     const taskId = this.validation.assertValidTaskId(id);
-    const nameError = this.validation.validateTaskName(name);
-    if (nameError) throw new Error(nameError);
+    const task = this.validation.assertValidTaskInput({ name, completionDate });
 
     const statement = this.db.prepare(`
-      UPDATE tasks SET name = ?, updated_at = ? WHERE id = ?
+      UPDATE tasks
+      SET name = ?, completion_date = ?, updated_at = ?
+      WHERE id = ?
     `);
     try {
-      statement.run([name.trim(), new Date().toISOString(), taskId]);
+      statement.run([
+        task.name,
+        task.completionDate,
+        new Date().toISOString(),
+        taskId,
+      ]);
     } finally {
       statement.free();
     }

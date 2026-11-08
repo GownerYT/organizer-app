@@ -341,7 +341,12 @@ input[aria-invalid="true"] {
 
 .task-edit-input {
   min-height: 38px;
-  margin-bottom: 0.35rem;
+}
+
+.task-edit-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 170px;
+  gap: 0.7rem;
 }
 
 .dialog-backdrop {
@@ -419,6 +424,10 @@ input[aria-invalid="true"] {
   .task-item {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .task-edit-fields {
+    grid-template-columns: 1fr;
   }
 
   .task-actions {
