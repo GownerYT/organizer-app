@@ -17,6 +17,14 @@ export default function ConfirmDialog({ open, onCancel, onConfirm, isBusy }) {
 
   if (!open) return null;
 
+  async function handleConfirm() {
+    try {
+      await onConfirm();
+    } catch {
+      // The app-level alert contains the safe database error.
+    }
+  }
+
   return (
     <div className="dialog-backdrop" role="presentation">
       <div
@@ -41,7 +49,7 @@ export default function ConfirmDialog({ open, onCancel, onConfirm, isBusy }) {
           <button
             className="button button-danger"
             type="button"
-            onClick={() => void onConfirm()}
+            onClick={() => void handleConfirm()}
             disabled={isBusy}
           >
             Delete All

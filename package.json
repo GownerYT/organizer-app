@@ -11,7 +11,7 @@
     "test": "node --test \"shared/**/*.test.js\" \"electron/**/*.test.cjs\"",
     "lint": "eslint .",
     "format:check": "prettier --check .",
-    "typecheck": "node --check electron/main.cjs && node --check electron/database.cjs && node --check electron/preload.cjs",
+    "typecheck": "node --check electron/main.cjs && node --check electron/database.cjs && node --check electron/preload.cjs && node --check scripts/beforePack.cjs && node --check scripts/afterPack.cjs",
     "package": "npm run build && electron-builder --win dir"
   },
   "dependencies": {

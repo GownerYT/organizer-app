@@ -15,6 +15,9 @@ exports.default = async function beforePack(context) {
   );
   const backupDatabase = path.join(outputDirectory, ".organizer-db-backup");
 
+  if (fs.existsSync(backupDatabase)) {
+    fs.unlinkSync(backupDatabase);
+  }
   if (fs.existsSync(existingDatabase)) {
     fs.copyFileSync(existingDatabase, backupDatabase);
   }

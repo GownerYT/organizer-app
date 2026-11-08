@@ -4,20 +4,14 @@ import ConfirmDialog from "./components/ConfirmDialog.jsx";
 import Header from "./components/Header.jsx";
 import TaskForm from "./components/TaskForm.jsx";
 import TaskList from "./components/TaskList.jsx";
+import { SAFE_ERROR_MESSAGES } from "../shared/taskValidation.js";
 
 const api = window.organizer;
 
 function getErrorMessage(error) {
   const message = error instanceof Error ? error.message : "";
-  const safeMessages = new Set([
-    "Enter a task name.",
-    "Choose a due date.",
-    "Choose a valid due date.",
-    "That task could not be found.",
-    "We could not complete that task operation. Please try again.",
-  ]);
 
-  return safeMessages.has(message)
+  return SAFE_ERROR_MESSAGES.includes(message)
     ? message
     : "Something went wrong. Please try again.";
 }

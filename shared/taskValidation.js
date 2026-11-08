@@ -1,5 +1,13 @@
 const DATE_ONLY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
+export const SAFE_ERROR_MESSAGES = [
+  "Enter a task name.",
+  "Choose a due date.",
+  "Choose a valid due date.",
+  "That task could not be found.",
+  "We could not complete that task operation. Please try again.",
+];
+
 export function validateTaskName(value) {
   if (typeof value !== "string" || value.trim().length === 0) {
     return "Enter a task name.";

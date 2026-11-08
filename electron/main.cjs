@@ -7,13 +7,6 @@ const { TaskDatabase } = require("./database.cjs");
 let database;
 let validation;
 
-const SAFE_ERROR_MESSAGES = new Set([
-  "Enter a task name.",
-  "Choose a due date.",
-  "Choose a valid due date.",
-  "That task could not be found.",
-]);
-
 function getDatabasePath() {
   const baseDirectory = app.isPackaged
     ? path.dirname(app.getPath("exe"))
@@ -55,7 +48,8 @@ function runIpcOperation(operation) {
   } catch (error) {
     console.error("Organizer task operation failed:", error);
     const message = error instanceof Error ? error.message : "";
-    if (SAFE_ERROR_MESSAGES.has(message)) throw new Error(message);
+    if (validation.SAFE_ERROR_MESSAGES.includes(message))
+      throw new Error(message);
     throw new Error(
       "We could not complete that task operation. Please try again.",
     );
